@@ -17,5 +17,15 @@ if (empty($_POST)) {
             $model->deleteCategory($_POST['categoryId']);
             header("Location:controlPanel.php");
             break;
+
+        case 'deleteQuestion':
+            $model->deleteQuestion($_POST['questionId']);
+            header("Location:controlPanel.php");
+            break;
+
+        case 'hideQuestion':
+            $model->hideQuestion($_POST['questionId'], $_POST['status']);
+            header("Location:controlPanel.php");
+            break;
     }
 

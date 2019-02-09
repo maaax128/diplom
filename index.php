@@ -72,10 +72,10 @@ $resultAnswers = $model->getAnswers();
 			<li class="cd-faq-title"><?php echo "<h2>$group</h2>"; ?></li><?php
 			foreach ($questions as $resultQuest => $valueQuest) {
 
-				if ($valueQuest['id_category'] === $value['id'] && $valueQuest['answered'] == 1 ) {
+				if ($valueQuest['id_category'] === $value['id'] && $valueQuest['answered'] == 1 && $valueQuest['status'] == 1 ) {
 					$problem = $valueQuest['question'];
 					?>
-					<a class="cd-faq-trigger" href="#0"><?php echo "$problem</br>";?></a>		
+					<a class="cd-faq-trigger" href="#0"><?php echo "$problem</br>";?></a>
 				<?php					
 				}
 				foreach ($resultAnswers as $resultAnswer => $valueAnswer) {

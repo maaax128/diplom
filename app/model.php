@@ -61,6 +61,31 @@ class Model
 		return $results;
     }
 
+    public function getQuestionById($id) {
+	    $sql = 'SELECT * FROM questions q
+                  RIGHT JOIN category c ON c.id = q.id_category
+                WHERE q.id= :id LIMIT 1';
+
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        $results = $sth->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+
+    public function getQuestionsByCategory($category) {
+
+        $sql ="SELECT * FROM questions 
+                WHERE id_category= :id_category ";
+
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':id_category', $category, PDO::PARAM_INT);
+        $sth->execute();
+        $results = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
     public function getAnswers() {
     	$sth = self::$connect->prepare('SELECT * FROM answer');
     	$sth->execute();
@@ -68,8 +93,8 @@ class Model
 		return $results;
     }
     public function addUserQuestion($params=[]) {
-    	$sth = self::$connect->prepare("INSERT INTO questions (question, id_category, answered, userName, email) 
-    		VALUES (:question,:group,:answered,:name,:email)");
+    	$sth = self::$connect->prepare("INSERT INTO questions (question, id_category, answered, userName, email, create_date, status) 
+    		VALUES (:question,:group,:answered,:name,:email, NOW(), 0)");
 
 		$sth->bindValue(':question', $params['question'], PDO::PARAM_STR);
 		$sth->bindValue(':group', $params['group'], PDO::PARAM_STR);
@@ -126,5 +151,27 @@ class Model
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
     }
+
+    public function deleteQuestion($id) {
+        $sql = "DELETE FROM questions WHERE id= :id; ";
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+
+    public function hideQuestion($id,$status) {
+	    if ($status == 1) {
+	        $status = 2;
+        } elseif ($status == 2){
+            $status = 1;
+        }
+        $sql = "UPDATE questions SET status= :status WHERE id=:id";
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->bindValue(':status', $status, PDO::PARAM_INT);
+        $sth->execute();
+    }
+
+
 }
 //$pdo = new PDO("mysql:host=localhost;charset=UTF8; dbname=diplom", "root","")

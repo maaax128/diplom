@@ -473,3 +473,18 @@ header h1 {
     display: block;
   }
 }
+
+
+.line{
+   margin: 0;
+   padding: 0;
+   border: 0;
+   border: solid #a9c056 3px;
+ }
+
+.line-hr{
+   margin: 0;
+   padding: 0;
+   border: 0;
+   border: solid #4e5359 3px;
+ }
