@@ -6,6 +6,9 @@ $model->newConnect();
 $question = $model->getQuestionById((int)$_GET['id']);
 $categoryes = $model->getCategoryes();
 
+//        echo '<pre>';
+//        var_dump($question);
+//        echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +34,7 @@ $categoryes = $model->getCategoryes();
             <input type="text" name="question_id" value="<?=$question['question_id']?>" hidden>
 
             <div style="display: inline-block; float: left;">
-                <textarea name="question" rows="4" cols="45" name="question"> <?=$question["question"]?></textarea>
+                <textarea name="question" rows="4" cols="45"> <?=$question["question"]?></textarea>
             </div>
             <div style="display: inline-block; margin-left: 5px;">
                 <select size="1" name="category_id">

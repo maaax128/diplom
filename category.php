@@ -32,5 +32,10 @@ if (empty($_POST)) {
             $model->editQuestion($_POST);
             header("Location:controlPanel.php");
             break;
+
+        case 'addAnswer':
+            $model->addAnswer($_POST);
+            header("Location:controlPanel.php");
+            break;
     }
 

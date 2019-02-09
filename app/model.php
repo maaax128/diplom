@@ -66,7 +66,7 @@ class Model
                 FROM questions q
                   RIGHT JOIN category c ON c.id = q.id_category
                   RIGHT JOIN answer a ON a.id_questions = q.id
-                WHERE q.id= :id LIMIT 1';
+                WHERE q.id=:id LIMIT 1';
 
         $sth = self::$connect->prepare($sql);
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
@@ -175,10 +175,6 @@ class Model
     }
 
     public function editQuestion($arr) {
-//        echo '<pre>';
-//        echo var_dump($arr);
-//        echo '</pre>';
-
         $sql = "UPDATE questions 
                   SET question = :question,
                       id_category = :category_id,
@@ -200,6 +196,22 @@ class Model
         $sth->bindValue(':answer', trim($arr['answer']), PDO::PARAM_STR);
         $sth->bindValue(':category_id', (int)$arr['category_id'], PDO::PARAM_INT);
         $sth->bindValue(':id', (int)$arr['answer_id'], PDO::PARAM_INT);
+        $sth->execute();
+    }
+
+    public function addAnswer($arr) {
+        $sql = "INSERT INTO answer (answer, id_category, id_questions) 
+                  VALUES (:answer, :id_category, :id_questions)";
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':answer', $arr['answer'], PDO::PARAM_STR);
+        $sth->bindValue(':id_category', (int)$arr['category_id'], PDO::PARAM_INT);
+        $sth->bindValue(':id_questions', (int)$arr['question_id'], PDO::PARAM_INT);
+        $sth->execute();
+
+        $sql = "UPDATE questions SET answered = 1, status = :status where id= :id";
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':id', (int)$arr['question_id'], PDO::PARAM_INT);
+        $sth->bindValue(':status', (int)$arr['status'], PDO::PARAM_INT);
         $sth->execute();
     }
 }

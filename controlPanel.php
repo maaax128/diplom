@@ -173,11 +173,13 @@ foreach ($resultAdmins as $key => $value) { ?>
                                         <input type="submit" value="Редактировать">
                                     </form>
 
-                                    <form action="category.php" method="post" style="display: inline-block">
+                                    <?php if($v['status']==0) { ?>
+                                    <form action="addAnswer.php" method="post" style="display: inline-block">
                                         <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
-                                        <input type="text" name="method" hidden value="answerQuestion">
+                                        <input type="text" name="category_id" value="<?=$id_category?>" hidden>
                                         <input type="submit" value="Ответить">
                                     </form>
+                                    <?php } ?>
 
                                 </div>
 
