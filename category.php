@@ -27,5 +27,10 @@ if (empty($_POST)) {
             $model->hideQuestion($_POST['questionId'], $_POST['status']);
             header("Location:controlPanel.php");
             break;
+
+        case 'editQuestion':
+            $model->editQuestion($_POST);
+            header("Location:controlPanel.php");
+            break;
     }
 

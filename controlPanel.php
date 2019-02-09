@@ -40,7 +40,7 @@ $categoryes = $model->getCategoryes();
 if ($_SESSION['login'] === 'admin') {
 ?>
 <header>
-    <h2>Список администраторов</h2>
+    <h2>Панель администратора</h2>
 </header>
 <section class="cd-faq">
     <div class="cd-faq-items">

@@ -488,3 +488,10 @@ header h1 {
    border: 0;
    border: solid #4e5359 3px;
  }
+
+.clear {
+  clear:both;
+  float:left;
+  width:100%;
+  margin: 0 auto;
+}

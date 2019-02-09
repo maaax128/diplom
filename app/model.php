@@ -62,8 +62,10 @@ class Model
     }
 
     public function getQuestionById($id) {
-	    $sql = 'SELECT * FROM questions q
+	    $sql = 'SELECT *, a.id AS answer_id, q.id AS question_id
+                FROM questions q
                   RIGHT JOIN category c ON c.id = q.id_category
+                  RIGHT JOIN answer a ON a.id_questions = q.id
                 WHERE q.id= :id LIMIT 1';
 
         $sth = self::$connect->prepare($sql);
@@ -172,6 +174,32 @@ class Model
         $sth->execute();
     }
 
+    public function editQuestion($arr) {
+//        echo '<pre>';
+//        echo var_dump($arr);
+//        echo '</pre>';
 
+        $sql = "UPDATE questions 
+                  SET question = :question,
+                      id_category = :category_id,
+                      userName = :username
+                WHERE id= :id";
+
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':question', trim($arr['question']), PDO::PARAM_STR);
+        $sth->bindValue(':category_id', (int)$arr['category_id'], PDO::PARAM_INT);
+        $sth->bindValue(':username', $arr['userName'], PDO::PARAM_STR);
+        $sth->bindValue(':id', (int)$arr['question_id'], PDO::PARAM_INT);
+        $sth->execute();
+
+        $sql = "UPDATE answer 
+                  SET answer = :answer,
+                      id_category = :category_id
+                WHERE id= :id";
+        $sth = self::$connect->prepare($sql);
+        $sth->bindValue(':answer', trim($arr['answer']), PDO::PARAM_STR);
+        $sth->bindValue(':category_id', (int)$arr['category_id'], PDO::PARAM_INT);
+        $sth->bindValue(':id', (int)$arr['answer_id'], PDO::PARAM_INT);
+        $sth->execute();
+    }
 }
-//$pdo = new PDO("mysql:host=localhost;charset=UTF8; dbname=diplom", "root","")
