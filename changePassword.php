@@ -1,6 +1,7 @@
 <?php
-session_start();
-$_SESSION['admin_id'] = $_POST['admin_id'];
+//session_start();
+//$_SESSION['admin_id'] = $_POST['admin_id'];
+$id=(int)$_GET['id'];
 ?>
 
 
@@ -11,11 +12,13 @@ $_SESSION['admin_id'] = $_POST['admin_id'];
 	<title>Смена пароля</title>
 </head>
 <body>
-<form action="newPassword.php" method="post" enctype="multipart/form-data">
+<form action="controller.php" method="post" enctype="multipart/form-data">
 <fieldset>
- <legend>Введите новый пароль</legend>
- <input type="text" name="password" placeholder="Введите пароль">
- <input type="submit" name="change" value="Отправить">
+<legend>Введите новый пароль</legend>
+    <input type="text" name="method" value="changePassword" hidden>
+    <input type="text" name="admin_id" value="<?=$id?>" hidden>
+    <input type="text" name="password" placeholder="Введите пароль">
+    <input type="submit" value="Отправить">
 </fieldset>
 </form>
 <p><a href="controlPanel.php">Вернуться в панель администратора</a></p>    

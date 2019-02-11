@@ -8,6 +8,16 @@ if (empty($_POST)) {
     $model->newConnect();
 
     switch ($_POST['method']) {
+        case 'deleteAdmin':
+            $model->DeleteAdmins($_POST['adminId']);
+            header("Location:controlPanel.php");
+            break;
+
+        case 'changePassword':
+            $model->changePassword($_POST);
+           header("Location:controlPanel.php");
+            break;
+
         case 'addCategory':
             $model->addCategory($_POST['categoryName']);
             header("Location:controlPanel.php");

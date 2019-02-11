@@ -3,8 +3,6 @@
 require('app/model.php');
 
 if (!empty($_POST ['selected'])) {
-	//require('connect.php');
-	//require('selectCategory.php');
 	$model = new Model();
 	$model->newConnect();
 	$categoryes = $model->getCategoryes();

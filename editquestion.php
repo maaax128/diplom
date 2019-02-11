@@ -3,7 +3,13 @@ require('app/model.php');
 
 $model = new Model();
 $model->newConnect();
-$question = $model->getQuestionById((int)$_GET['id']);
+
+if($_GET['type'] == 'notanswered'){
+    $question = $model->getOneQuestion((int)$_GET['id']);
+} else {
+    $question = $model->getQuestionById((int)$_GET['id']);
+}
+
 $categoryes = $model->getCategoryes();
 
 //        echo '<pre>';
@@ -27,7 +33,7 @@ $categoryes = $model->getCategoryes();
     <h2>Редактирование вопроса</h2>
 </header>
 <section class="cd-faq">
-    <form action="category.php" method="post">
+    <form action="controller.php" method="post">
         <div class="cd-faq-items" style="margin-top: 10px; display: table-row;">
 
             <input type="text" name="method" value="editQuestion" hidden>
@@ -35,7 +41,7 @@ $categoryes = $model->getCategoryes();
 
             <div style="display: inline-block; float: left;">
                 <textarea name="question" rows="4" cols="45"> <?=$question["question"]?></textarea>
-            </div>
+        </div>
             <div style="display: inline-block; margin-left: 5px;">
                 <select size="1" name="category_id">
                     <option disabled >Выберите категорию</option>
@@ -53,17 +59,22 @@ $categoryes = $model->getCategoryes();
         <div style="margin-top: 10px;">
             <div style="display: inline-block"> Автор:</div>
             <div style="display: inline-block">
-                <input name="userName" type="text" value="<?=$question["userName"]?>">
+                <input name="userName" type="text" value="<?=$question["userName"]?>" >
             </div>
         </div>
 
-        <div style="margin-top: 10px;">
-            <div style="display: inline-block; float: left; margin-right:5px;"> Ответ:</div>
-            <div style="display: inline-block; float: left;">
-                <textarea name="answer" rows="4" cols="45" name="question"><?=$question["answer"]?></textarea>
-                <input type="text" name="answer_id" value="<?=$question['answer_id'];?>" hidden>
+        <?php
+            if($_GET['type'] != 'notanswered'){
+        ?>
+
+            <div style="margin-top: 10px;">
+                <div style="display: inline-block; float: left; margin-right:5px;"> Ответ:</div>
+                <div style="display: inline-block; float: left;">
+                    <textarea name="answer" rows="4" cols="45" name="question"><?=$question["answer"]?></textarea>
+                    <input type="text" name="answer_id" value="<?=$question['answer_id'];?>" hidden>
+                </div>
             </div>
-        </div>
+        <?php } ?>
 
         <div class="clear" style="margin-top: 5px;">
             <input type="submit" value="Сохранить изменения">

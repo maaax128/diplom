@@ -47,6 +47,49 @@ class Model
 		self::$connect = Di::get();
 	}
 
+	public function addNewAdmin($var=[]) {
+	        $login = $var['name'];
+            $sth = self::$connect->prepare("SELECT id from admins WHERE login='$login'");
+            $sth->execute();
+            $sth = $sth->fetchAll(PDO::FETCH_ASSOC);
+            //var_dump($sth);
+
+            if (!empty($sth)) {
+                //Такой логин уже существует
+                return null;
+                exit;
+            }
+
+    	$sth = self::$connect->prepare("INSERT INTO admins (login, password)
+    		VALUES (:name,:password)");
+		$sth->bindValue(':name', $var['name'], PDO::PARAM_STR);
+		$sth->bindValue(':password', $var['password'], PDO::PARAM_STR);
+		$sth->execute();
+
+		return null;
+    }
+
+    public function getAdmins () {
+        $sth = self::$connect->prepare('SELECT * FROM admins');
+        $sth->execute();
+        $resultAdmins = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $resultAdmins;
+    }
+
+
+    public function deleteAdmins($id) {
+        $sth = self::$connect->prepare('DELETE FROM admins WHERE id= :id');
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+
+    public function changePassword($arr) {
+        $sth = self::$connect->prepare("UPDATE admins SET password = :password WHERE id = :id");
+        $sth->bindValue(':id', (int)$arr['admin_id'], PDO::PARAM_INT);
+        $sth->bindValue(':password', $arr['password'], PDO::PARAM_STR);
+        $sth->execute();
+	}
+
     public function getCategoryes() {
 		$sth = self::$connect->prepare('SELECT * FROM category');
 		$sth->execute();
@@ -61,6 +104,23 @@ class Model
 		return $results;
     }
 
+    public function getOneQuestion($id) {
+        $sth = self::$connect->prepare('SELECT *, id as question_id FROM questions WHERE id=:id ');
+        $sth->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $sth->execute();
+        $results = $sth->fetch(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
+    public function getNotAnsweredQuestions() {
+        $sth = self::$connect->prepare('SELECT * FROM questions 
+                                          WHERE NOT(answered = 1)
+                                        ORDER BY create_date');
+        $sth->execute();
+        $results = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
     public function getQuestionById($id) {
 	    $sql = 'SELECT *, a.id AS answer_id, q.id AS question_id
                 FROM questions q
@@ -69,7 +129,7 @@ class Model
                 WHERE q.id=:id LIMIT 1';
 
         $sth = self::$connect->prepare($sql);
-        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->bindValue(':id', (int)$id, PDO::PARAM_INT);
         $sth->execute();
         $results = $sth->fetch(PDO::FETCH_ASSOC);
 

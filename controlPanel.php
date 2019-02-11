@@ -1,26 +1,12 @@
 <?php
 session_start();
-//var_dump($_SESSION);
-require('connect.php');
-require('selectAdmins.php');
 
 require('app/model.php');
 
 $model = new Model();
 $model->newConnect();
 $categoryes = $model->getCategoryes();
-
-//if ($_SERVER['REQUEST_METHOD'] == "POST") {
-//    if (!empty($_POST) && isset($_POST['categoryName'])){
-//        if ($_POST['categoryName'] && trim($_POST['categoryName']) != "") {
-//
-//           // $_POST['categoryName'] = "";
-//
-//           // header("Location:controlPanel.php");
-//        }
-//    }
-//    //die('test');
-//}
+$resultAdmins = $model->getAdmins();
 
 ?>
 
@@ -52,7 +38,6 @@ if ($_SESSION['login'] === 'admin') {
 	<table>
         <tr>
             <th>№</th>
-            <th>id</th>
             <th>Логин</th>
             <th>Пароль</th>
             <th>Сменить пароль</th>
@@ -69,28 +54,28 @@ foreach ($resultAdmins as $key => $value) { ?>
         echo "$i";
         $i ++;
         ?> 
-        </td>      
-        <td><?php echo $value['id']; ?></td>
+        </td>
         <td><?php echo $value['login']; ?></td>
         <td><?php echo $value['password']; ?></td>
         <td>
 
-        <form action="changePassword.php" method="post" enctype="">        
-            <input type="hidden" name="admin_id" value="<?=$value['id']?>">
-            <input type="submit" name="" value="сменить пароль">
+        <form action="changePassword.php" method="get" enctype="">
+            <input type = "text" name="id" value="<?=$value['id']?>" hidden>
+            <input type="submit" value="сменить пароль">
         </form>
 
         </td>
         <td>
-            <form action="delete.php" method="post" enctype="">
-            <input type="hidden" name="admin_id" value="<?=$value['id']?>">
+            <form id="deleteAdmin" action="controller.php" method="post">
+            <input type = "text" name="adminId" value="<?=$value['id']?>" hidden>
+            <input type="text" name="method" hidden value="deleteAdmin">
             <?php
                 if ($value['login'] === 'admin') {
                     echo 'это Вы';
                     
                  } 
                  else {
-                     ?><input type="submit" name="" value="удалить"><?php
+                     ?><input type="submit" value="удалить администратора"><?php
                  }
             ?>
             </form>
@@ -117,7 +102,7 @@ foreach ($resultAdmins as $key => $value) { ?>
                 $countNotAnswered = $countAll - $countAnswered;
                 ?>
                 <div style="margin-left: 10px;">
-                    <form id="deleteCategory" action="category.php" method="post">
+                    <form id="deleteCategory" action="controller.php" method="post">
                         <li class="cd-faq-title"><?php echo "<h2>$group</h2>"; ?></li>
                             <div style="margin-bottom: 5px;">
                                 Всего вопросов: <?=$countAll;?>
@@ -145,7 +130,7 @@ foreach ($resultAdmins as $key => $value) { ?>
                                     <?=$i?>)
                                     <?=$v["question"];?>
                                 <div>
-                                    <form id="deleteQuestion" action="category.php" method="post" style="display: inline-block">
+                                    <form id="deleteQuestion" action="controller.php" method="post" style="display: inline-block">
                                         <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
                                         <input type="text" name="method" hidden value="deleteQuestion">
                                         <input type="submit" value="Удалить">
@@ -153,14 +138,14 @@ foreach ($resultAdmins as $key => $value) { ?>
                                     </form>
 
                                     <?php if($v['status']==1) {?>
-                                    <form action="category.php" method="post" style="display: inline-block">
+                                    <form action="controller.php" method="post" style="display: inline-block">
                                         <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
                                         <input type="text" name="status" value="<?=$v['status']?>" hidden>
                                         <input type="text" name="method" hidden value="hideQuestion">
                                         <input type="submit" value="Скрыть">
                                     </form>
                                     <?php }else if($v['status']==2){ ?>
-                                    <form action="category.php" method="post"  style="display: inline-block">
+                                    <form action="controller.php" method="post" style="display: inline-block">
                                         <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
                                         <input type="text" name="status" value="<?=$v['status']?>" hidden>
                                         <input type="text" name="method" hidden value="hideQuestion">
@@ -170,6 +155,9 @@ foreach ($resultAdmins as $key => $value) { ?>
 
                                     <form action="editquestion.php" method="get" style="display: inline-block">
                                         <input type="text" name="id" value="<?=$v['id']?>" hidden>
+                                        <?php if($v['answered']!=1) { ?>
+                                        <input type="text" name="type" value="notanswered" hidden>
+                                        <?}?>
                                         <input type="submit" value="Редактировать">
                                     </form>
 
@@ -184,13 +172,15 @@ foreach ($resultAdmins as $key => $value) { ?>
                                 </div>
 
                                     <span style="font-size: 11px; color:lightslategrey;">
-                                        Дата: <?=$v['create_date'];?></span> <span style="font-size: 12px; color: darkolivegreen"> Статус:
-                                    <?php switch ($v['status']) {
-                                            case 0: echo "Ожидает ответа"; break;
-                                            case 1: echo "Опубликован"; break;
-                                            case 2: echo "Скрыт"; break;
-                                    }?>
-
+                                        Дата: <?=$v['create_date'];?>
+                                    </span>
+                                    <span style="font-size: 12px; color: darkolivegreen"> Статус:
+                                        <?php switch ($v['status']) {
+                                                case 0: echo "Ожидает ответа"; break;
+                                                case 1: echo "Опубликован"; break;
+                                                case 2: echo "Скрыт"; break;
+                                        }?>
+                                    </span>
                             </div>
                         <?php }?>
                     </div>
@@ -204,13 +194,46 @@ foreach ($resultAdmins as $key => $value) { ?>
         <h2>Добавление новой темы</h2>
     </div>
     <div style="margin-top: 10px">
-        <form id="categoryName" action="category.php" method="POST" enctype="">
+        <form id="categoryName" action="controller.php" method="POST" enctype="">
             <input type="text" name="categoryName" placeholder="Название темы" required>
             <input type="text" name="method" hidden value="addCategory">
             <input type="submit" value="Добавить тему">
         </form>
     </div>
 </div>
+</section>
+
+<section class="cd-faq">
+    <div class="line-hr"></div> <div class="line-hr"></div>
+    <h2>Список всех вопросов без ответов:</h2>
+    <br>
+    <?php
+        $allQuestions = $model->getNotAnsweredQuestions();
+        $i=0;
+        foreach ($allQuestions as $k=>$v) {
+            $i++;?>
+            <div>
+                <?=$i?>) <?=$v['question']?>
+                <span style="font-size: 11px; color:lightslategrey;">
+                       Дата: <?=$v['create_date'];?>
+                </span>
+                <div>
+                    <form id="deleteQuestion" action="controller.php" method="post" style="display: inline-block">
+                        <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
+                        <input type="text" name="method" hidden value="deleteQuestion">
+                        <input type="submit" value="Удалить">
+                        </span>
+                    </form>
+
+                    <form action="editquestion.php" method="get" style="display: inline-block">
+                        <input type="text" name="id" value="<?=$v['id']?>" hidden>
+                        <input type="text" name="type" value="notanswered" hidden>
+                        <input type="submit" value="Редактировать">
+                    </form>
+
+                </div>
+            </div>
+        <?php } ?>
 </section>
 
 <script src="js/jquery-2.1.1.js"></script>
