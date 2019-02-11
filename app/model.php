@@ -12,7 +12,7 @@ class Di
         $db = self::$di->config();
         
         try {
-            $dbconnect = new PDO($db['driver'].":host=" . $db['host'] . ";dbname=" . $db['dbname'],$db['user'], $db['pass']);
+            $dbconnect = new PDO($db['driver'].":host=" . $db['host'] . ";dbname=" . $db['dbname'].';charset=UTF8;',$db['user'], $db['pass']);
 
         } catch (PDOException $e) {
             die('Database error: '.$e->getMessage().'<br/>');
@@ -30,7 +30,7 @@ class Di
     {
         $db = $this->config();
         try {
-            $db = new PDO($db['driver'].":host=" . $db['host'] . ";dbname=" . $db['dbname'],$db['user'], $db['pass']);
+            $db = new PDO($db['driver'].":host=" . $db['host'] .";charset=UTF8;". ";dbname=" . $db['dbname'],$db['user'], $db['pass']);
 
         } catch (PDOException $e) {
             die('Database error: '.$e->getMessage().'<br/>');

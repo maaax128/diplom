@@ -4,7 +4,7 @@ require('app/model.php');
 $model = new Model();
 $model->newConnect();
 
-if($_GET['type'] == 'notanswered'){
+if(isset($_GET['type'] ) && $_GET['type'] == 'notanswered'){
     $question = $model->getOneQuestion((int)$_GET['id']);
 } else {
     $question = $model->getQuestionById((int)$_GET['id']);
@@ -48,9 +48,9 @@ $categoryes = $model->getCategoryes();
                     <?php
                         foreach ($categoryes as $result => $value) {
                             ?>
-                            <option value="<?=$value['id']?>" <?=($value['category']==$question['category']? "selected" : "") ?>><?=$value['category']?></option>
+                            <option value="<?=$value['id']?>" <?=($value['id']==$question['id_category']? "selected" : "") ?>><?=$value['category']?></option>
                             <?php
-                        }
+                                }
                     ?>
                 </select>
             </div>
@@ -64,7 +64,7 @@ $categoryes = $model->getCategoryes();
         </div>
 
         <?php
-            if($_GET['type'] != 'notanswered'){
+            if(!isset($_GET['type'] )) {
         ?>
 
             <div style="margin-top: 10px;">

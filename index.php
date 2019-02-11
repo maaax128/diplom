@@ -47,7 +47,7 @@ $resultAnswers = $model->getAnswers();
 </header>
 <section class="cd-faq">
 <ul class="cd-faq-categories">
-	<form action="formAuthorization.html" method="post" enctype="multipart/form-data">
+	<form action="formAuthorization.php" method="post" enctype="multipart/form-data">
 		<input class="submit" type="submit" name="checkIn" value="Авторизация">
 	</form>
 	<form action="questoinUser.php" method="post" enctype="multipart/form-data">

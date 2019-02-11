@@ -12,7 +12,7 @@
 <header>
     <h2>Регистрация нового администратора</h2>
 </header>
-<form action="addNewAdmins.php" method="post" enctype="multipart/form-data">
+<form action="addNewADmins.php" method="post" enctype="multipart/form-data">
 <fieldset>
 
 
