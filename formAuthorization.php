@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="UTF-8">
-	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+<?php
+$title= "Форма авторизации";
 
-    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
-    <script src="js/modernizr.js"></script> <!-- Modernizr -->
-
-	<title>Авторизация</title>
-</head>
-<body>
-	<header>
-		
-	</header>
+include "templates/head.php";
+?>
 	<div class="cd-faq-items">
 		<form action="actionAuthorization.php" method="post" enctype="multipart/form-data">
 			<h2>Авторизация</h2>

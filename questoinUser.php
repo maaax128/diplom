@@ -6,16 +6,13 @@ $model = new Model();
 $model->newConnect();
 $categoryes = $model->getCategoryes();
 
+$title= "Задать вопрос";
+
+include "templates/head.php";
+
 ?>
 
 
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="UTF-8">
-	<title>Задать вопрос</title>
-</head>
 <body>
 <form action="addQuestionUser.php" method="post" enctype="multipart/form-data">
 <fieldset>

@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="UTF-8">
+<?php
 
-    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
-    <script src="js/modernizr.js"></script> <!-- Modernizr -->
-	<title>Добавить нового администратора</title>
-</head>
-<body>
-<header>
-    <h2>Регистрация нового администратора</h2>
-</header>
+$title= "Регистрация нового администратора";
+include "templates/head.php";
+
+?>
+
+
 <form action="addNewADmins.php" method="post" enctype="multipart/form-data">
 <fieldset>
 

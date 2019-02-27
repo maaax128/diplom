@@ -2,15 +2,11 @@
 //session_start();
 //$_SESSION['admin_id'] = $_POST['admin_id'];
 $id=(int)$_GET['id'];
+$title= "Смена пароля";
+
+include "templates/head.php";
 ?>
 
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-	<meta charset="UTF-8">
-	<title>Смена пароля</title>
-</head>
 <body>
 <form action="controller.php" method="post" enctype="multipart/form-data">
 <fieldset>
