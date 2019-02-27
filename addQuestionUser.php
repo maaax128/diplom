@@ -1,9 +1,9 @@
 <?php
-
-require('app/model.php');
+require('app/connect.php');
+require('app/questions.php');
 
 if (!empty($_POST ['selected'])) {
-	$model = new Model();
+	$model = new questions();
 	$model->newConnect();
 	$categoryes = $model->getCategoryes();
 

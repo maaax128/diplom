@@ -1,18 +1,22 @@
 ﻿<?php
-//require('connect.php');
-require('app/model.php');
+require('app/connect.php');
+require('app/answers.php');
+require('app/questions.php');
 
 //require('app/model.php');
 //require('selectCategory.php');
 
 //use App\Model;
 
-$model = new Model();
+$model = new questions();
 $model->newConnect();
 
 $categoryes = $model->getCategoryes();
 $questions = $model->getQuestions();
-$resultAnswers = $model->getAnswers();
+
+$answers = new answers();
+$answers->newConnect();
+$resultAnswers = $answers->getAnswers();
 
 		/*echo '<pre>';
 		var_dump($resultAnswers);

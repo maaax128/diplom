@@ -1,12 +1,17 @@
 <?php
 //session_start();
+require('app/connect.php');
+include('app/questions.php');
+include('app/users.php');
 
-include('app/model.php');
-
-$model = new Model();
+$model = new questions();
 $model->newConnect();
 $categoryes = $model->getCategoryes();
-$resultAdmins = $model->getAdmins();
+
+
+$users = new users();
+$users->newConnect();
+$resultAdmins = $users->getAdmins();
 
 $title = "Панель администратора";
 include "templates/head.php"

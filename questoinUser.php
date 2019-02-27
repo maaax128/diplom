@@ -1,8 +1,9 @@
 <?php
 //require('connect.php');
 //require('selectCategory.php');
-require('app/model.php');
-$model = new Model();
+require('app/connect.php');
+require('app/questions.php');
+$model = new questions();
 $model->newConnect();
 $categoryes = $model->getCategoryes();
 

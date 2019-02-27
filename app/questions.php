@@ -1,111 +1,28 @@
 <?php 
-class Di
-{
-    static $di = null;
-
-    public static function get()
-    {
-        if (! self::$di) {
-            self::$di = new Di();
-        }
-
-        $db = self::$di->config();
-        
-        try {
-            $dbconnect = new PDO($db['driver'].":host=" . $db['host'] . ";dbname=" . $db['dbname'].';charset=UTF8;',$db['user'], $db['pass']);
-
-        } catch (PDOException $e) {
-            die('Database error: '.$e->getMessage().'<br/>');
-        }
-
-        return $dbconnect;
-    }
-    public function config()
-    {
-        $settings = require 'settings.php';
-		$db = $settings['db'];
-        return $db;
-    }
-    public function db()
-    {
-        $db = $this->config();
-        try {
-            $db = new PDO($db['driver'].":host=" . $db['host'] .";charset=UTF8;". ";dbname=" . $db['dbname'],$db['user'], $db['pass']);
-
-        } catch (PDOException $e) {
-            die('Database error: '.$e->getMessage().'<br/>');
-        }
-        return $db;
-    }
-}
-
-class Model
+class questions
 {
 	static $connect = null;
 
 	public function newConnect(){
-		self::$connect = Di::get();
-	}
-
-	public function addNewAdmin($var=[]) {
-	        $login = $var['name'];
-            $sth = self::$connect->prepare("SELECT id from admins WHERE login='$login'");
-            $sth->execute();
-            $sth = $sth->fetchAll(PDO::FETCH_ASSOC);
-            //var_dump($sth);
-
-            if (!empty($sth)) {
-                //Такой логин уже существует
-                return null;
-                exit;
-            }
-
-    	$sth = self::$connect->prepare("INSERT INTO admins (login, password)
-    		VALUES (:name,:password)");
-		$sth->bindValue(':name', $var['name'], PDO::PARAM_STR);
-		$sth->bindValue(':password', $var['password'], PDO::PARAM_STR);
-		$sth->execute();
-
-		return null;
-    }
-
-    public function getAdmins () {
-        $sth = self::$connect->prepare('SELECT * FROM admins');
-        $sth->execute();
-        $resultAdmins = $sth->fetchAll(PDO::FETCH_ASSOC);
-        return $resultAdmins;
-    }
-
-
-    public function deleteAdmins($id) {
-        $sth = self::$connect->prepare('DELETE FROM admins WHERE id= :id');
-        $sth->bindValue(':id', $id, PDO::PARAM_INT);
-        $sth->execute();
-    }
-
-    public function changePassword($arr) {
-        $sth = self::$connect->prepare("UPDATE admins SET password = :password WHERE id = :id");
-        $sth->bindValue(':id', (int)$arr['admin_id'], PDO::PARAM_INT);
-        $sth->bindValue(':password', $arr['password'], PDO::PARAM_STR);
-        $sth->execute();
+		self::$connect = connect::get();
 	}
 
     public function getCategoryes() {
-		$sth = self::$connect->prepare('SELECT * FROM category');
+		$sth = self::$connect->prepare('SELECT id, category FROM category');
 		$sth->execute();
 		$results = $sth->fetchAll(PDO::FETCH_ASSOC);
 		return $results;
     }
 
     public function getQuestions() {
-    	$sth = self::$connect->prepare('SELECT * FROM questions');
+    	$sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions');
 		$sth->execute();
 		$results = $sth->fetchAll(PDO::FETCH_ASSOC);
 		return $results;
     }
 
     public function getOneQuestion($id) {
-        $sth = self::$connect->prepare('SELECT *, id as question_id FROM questions WHERE id=:id ');
+        $sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status, id as question_id FROM questions WHERE id=:id ');
         $sth->bindValue(':id', (int)$id, PDO::PARAM_INT);
         $sth->execute();
         $results = $sth->fetch(PDO::FETCH_ASSOC);
@@ -113,7 +30,7 @@ class Model
     }
 
     public function getNotAnsweredQuestions() {
-        $sth = self::$connect->prepare('SELECT * FROM questions 
+        $sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions 
                                           WHERE NOT(answered = 1)
                                         ORDER BY create_date');
         $sth->execute();
@@ -122,7 +39,7 @@ class Model
     }
 
     public function getQuestionById($id) {
-	    $sql = 'SELECT *, a.id AS answer_id, q.id AS question_id
+	    $sql = 'SELECT id, question, id_category, answered, userName, email, create_date, status, id, category, id, answer, id_category, id_questions, a.id AS answer_id, q.id AS question_id
                 FROM questions q
                   RIGHT JOIN category c ON c.id = q.id_category
                   RIGHT JOIN answer a ON a.id_questions = q.id
@@ -138,7 +55,7 @@ class Model
 
     public function getQuestionsByCategory($category) {
 
-        $sql ="SELECT * FROM questions 
+        $sql ="SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions 
                 WHERE id_category= :id_category ";
 
         $sth = self::$connect->prepare($sql);
@@ -148,12 +65,6 @@ class Model
         return $results;
     }
 
-    public function getAnswers() {
-    	$sth = self::$connect->prepare('SELECT * FROM answer');
-    	$sth->execute();
-		$results = $sth->fetchAll(PDO::FETCH_ASSOC);
-		return $results;
-    }
     public function addUserQuestion($params=[]) {
     	$sth = self::$connect->prepare("INSERT INTO questions (question, id_category, answered, userName, email, create_date, status) 
     		VALUES (:question,:group,:answered,:name,:email, NOW(), 0)");
@@ -256,22 +167,6 @@ class Model
         $sth->bindValue(':answer', trim($arr['answer']), PDO::PARAM_STR);
         $sth->bindValue(':category_id', (int)$arr['category_id'], PDO::PARAM_INT);
         $sth->bindValue(':id', (int)$arr['answer_id'], PDO::PARAM_INT);
-        $sth->execute();
-    }
-
-    public function addAnswer($arr) {
-        $sql = "INSERT INTO answer (answer, id_category, id_questions) 
-                  VALUES (:answer, :id_category, :id_questions)";
-        $sth = self::$connect->prepare($sql);
-        $sth->bindValue(':answer', $arr['answer'], PDO::PARAM_STR);
-        $sth->bindValue(':id_category', (int)$arr['category_id'], PDO::PARAM_INT);
-        $sth->bindValue(':id_questions', (int)$arr['question_id'], PDO::PARAM_INT);
-        $sth->execute();
-
-        $sql = "UPDATE questions SET answered = 1, status = :status where id= :id";
-        $sth = self::$connect->prepare($sql);
-        $sth->bindValue(':id', (int)$arr['question_id'], PDO::PARAM_INT);
-        $sth->bindValue(':status', (int)$arr['status'], PDO::PARAM_INT);
         $sth->execute();
     }
 }

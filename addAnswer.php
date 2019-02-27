@@ -1,7 +1,8 @@
 <?php
-require('app/model.php');
+require('app/connect.php');
+require('app/questions.php');
 
-$model = new Model();
+$model = new questions();
 $model->newConnect();
 $title= "Редактирование вопроса";
 include "templates/head.php";

@@ -3,18 +3,28 @@ if (empty($_POST)) {
 	//header("Location:addAdmin.php");
 	die();
 }
-    require('app/model.php');
-    $model = new Model();
+    require('app/connect.php');
+    require('app/questions.php');
+    require('app/users.php');
+    require('app/answers.php');
+
+    $model = new questions();
     $model->newConnect();
+
+    $users = new users();
+    $users->newConnect();
+
+    $answers = new answers();
+    $answers->newConnect();
 
     switch ($_POST['method']) {
         case 'deleteAdmin':
-            $model->DeleteAdmins($_POST['adminId']);
+            $users->DeleteAdmins($_POST['adminId']);
             header("Location:controlPanel.php");
             break;
 
         case 'changePassword':
-            $model->changePassword($_POST);
+            $users->changePassword($_POST);
            header("Location:controlPanel.php");
             break;
 
@@ -44,7 +54,7 @@ if (empty($_POST)) {
             break;
 
         case 'addAnswer':
-            $model->addAnswer($_POST);
+            $answers->addAnswer($_POST);
             header("Location:controlPanel.php");
             break;
     }
