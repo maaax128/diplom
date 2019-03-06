@@ -1,6 +1,5 @@
 <?php
 if (empty($_POST)) {
-	//header("Location:addAdmin.php");
 	die();
 }
     require('model/Connect.php');

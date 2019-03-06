@@ -1,4 +1,5 @@
-<form action="addAdmin.php" method="post" enctype="">
+<form action="controller/usersController.php" method="get">
+    <input type="text" name="action" value="addAdmin" hidden>
     <input type="submit" name="newAdmin" value="Добавить администратора">
 </form>
 
@@ -25,9 +26,10 @@ foreach ($resultAdmins as $key => $value) { ?>
         <td><?php echo $value['password']; ?></td>
         <td>
 
-        <form action="changePassword.php" method="get" enctype="">
+        <form action="controller/usersController.php" method="get" enctype="">
             <input type = "text" name="id" value="<?=$value['id']; ?>" hidden>
-            <input type="submit" value="сменить пароль">
+            <input type = "text" name="action" value="changePassword" hidden>
+            <input type ="submit" value="сменить пароль">
         </form>
 
         </td>
