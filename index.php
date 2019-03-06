@@ -30,9 +30,12 @@ include "templates/head.php";
 
 <section class="cd-faq">
     <ul class="cd-faq-categories">
-        <form action="formAuthorization.php" method="post" enctype="multipart/form-data">
+<!--        formAuthorization.php-->
+        <form action="controller/usersController.php" method="get" enctype="multipart/form-data">
+            <input type="text" name="action" value="formAuthorization" hidden>
             <input class="submit" type="submit" name="checkIn" value="Авторизация">
         </form>
+
         <form action="questoinUser.php" method="post" enctype="multipart/form-data">
             <input class="submit" type="submit" name="questoinUser" value="Задать вопрос">
         </form>
