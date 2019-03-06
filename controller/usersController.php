@@ -15,4 +15,13 @@ switch ($_GET['action']) {
         include "../templates/users/addAdmin.php";
         include "../templates/foot.php";
         break;
+
+    case 'deleteAdmin':
+        $title= "Регистрация нового администратора";
+        include "../templates/head.php";
+        include "../templates/users/addAdmin.php";
+        include "../templates/foot.php";
+        break;
+
+
 }

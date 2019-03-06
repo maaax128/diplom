@@ -22,6 +22,15 @@ if (empty($_POST)) {
             header("Location:controlPanel.php");
             break;
 
+        case 'addNewADmins':
+            $var = array("name"=>$_POST['name'],
+                "password"=>$_POST['password'],
+
+            );
+            $users->addNewAdmin($var);
+            header("Location:controlPanel.php");
+            break;
+
         case 'changePassword':
             $users->changePassword($_POST);
            header("Location:controlPanel.php");
