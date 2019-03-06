@@ -1,6 +1,6 @@
 <?php
-require('app/connect.php');
-require('app/questions.php');
+require('model/Connect.php');
+require('model/Questions.php');
 
 if (!empty($_POST ['selected'])) {
 	$model = new questions();

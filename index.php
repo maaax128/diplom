@@ -1,12 +1,8 @@
 ﻿<?php
-require('app/connect.php');
-require('app/answers.php');
-require('app/questions.php');
+require('model/Connect.php');
+require('model/Answers.php');
+require('model/Questions.php');
 
-//require('app/model.php');
-//require('selectCategory.php');
-
-//use App\Model;
 
 $model = new questions();
 $model->newConnect();

@@ -1,4 +1,6 @@
 <?php
+
+//подключение к базе
 return array(
     'settings' => array(
         'displayErrorDetails' => true

@@ -1,6 +1,6 @@
 <?php
-require('app/connect.php');
-require('app/users.php');
+require('model/Connect.php');
+require('model/Users.php');
 $users = new users();
 $users->newConnect();
 if (empty($_POST['name']) || empty($_POST['password'])) {

@@ -1,5 +1,5 @@
 <?php
-class connect
+class Connect
 {
     static $di = null;
 
@@ -23,7 +23,7 @@ class connect
     public function config()
     {
         $settings = require 'settings.php';
-        $db = $settings['db'];
+        $db = $settings['local_db'];
         return $db;
     }
     public function db()

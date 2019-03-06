@@ -1,6 +1,6 @@
 <?php
 
-    class answers
+    class Answers
     {
         static $connect = null;
 
@@ -26,6 +26,7 @@
             $sth->execute();
         }
 
+        //получение списка ответов
         public function getAnswers()
         {
             $sth = self::$connect->prepare('SELECT id,answer,id_category,id_questions FROM answer');

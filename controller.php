@@ -3,10 +3,10 @@ if (empty($_POST)) {
 	//header("Location:addAdmin.php");
 	die();
 }
-    require('app/connect.php');
-    require('app/questions.php');
-    require('app/users.php');
-    require('app/answers.php');
+    require('model/Connect.php');
+    require('model/Questions.php');
+    require('model/Users.php');
+    require('model/Answers.php');
 
     $model = new questions();
     $model->newConnect();

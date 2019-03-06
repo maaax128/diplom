@@ -1,8 +1,8 @@
 <?php
 //session_start();
-require('app/connect.php');
-include('app/questions.php');
-include('app/users.php');
+require('model/Connect.php');
+include('model/Questions.php');
+include('model/Users.php');
 
 $model = new questions();
 $model->newConnect();

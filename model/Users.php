@@ -1,5 +1,5 @@
 <?php
-class users
+class Users
 {
     static $connect = null;
 
@@ -7,7 +7,7 @@ class users
     {
         self::$connect = connect::get();
     }
-
+    //добавление нового администратора
     public function addNewAdmin($var = [])
     {
         $login = $var['name'];

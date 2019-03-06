@@ -1,19 +1,19 @@
 <?php 
-class questions
+class Questions
 {
 	static $connect = null;
 
 	public function newConnect(){
 		self::$connect = connect::get();
 	}
-
+    //получение списка категорий
     public function getCategoryes() {
 		$sth = self::$connect->prepare('SELECT id, category FROM category');
 		$sth->execute();
 		$results = $sth->fetchAll(PDO::FETCH_ASSOC);
 		return $results;
     }
-
+    //получение списка вопросов
     public function getQuestions() {
     	$sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions');
 		$sth->execute();
