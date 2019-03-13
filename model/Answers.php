@@ -8,7 +8,7 @@
         {
             self::$connect = connect::get();
         }
-
+        //добавление ответа
         public function addAnswer($arr)
         {
             $sql = "INSERT INTO answer (answer, id_category, id_questions) 

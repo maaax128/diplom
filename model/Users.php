@@ -30,7 +30,7 @@ class Users
 
         return null;
     }
-
+//получение всех админов
     public function getAdmins()
     {
         $sth = self::$connect->prepare('SELECT id,login,password FROM admins');
@@ -39,14 +39,14 @@ class Users
         return $resultAdmins;
     }
 
-
+//удаление админа
     public function deleteAdmins($id)
     {
         $sth = self::$connect->prepare('DELETE FROM admins WHERE id= :id');
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
     }
-
+//смена пароля
     public function changePassword($arr)
     {
         $sth = self::$connect->prepare("UPDATE admins SET password = :password WHERE id = :id");
@@ -54,7 +54,7 @@ class Users
         $sth->bindValue(':password', $arr['password'], PDO::PARAM_STR);
         $sth->execute();
     }
-
+//авторизация админа
     public function autorization($arr){
         $sth = self::$connect->prepare("SELECT login from admins WHERE login=:login AND password = :password");
         $sth->bindValue(':login', $arr['login'], PDO::PARAM_STR);
@@ -62,15 +62,9 @@ class Users
         $sth->execute();
         $sth = $sth->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($sth)) {
-//            foreach ($sth as $value) {
-//                $_SESSION['user_id']=$value['id'];
-//                $_SESSION['login']=$value['login'];
-//                $_SESSION['password']=$value['password'];
-//
-//            }
             header("Location:../controlPanel.php");
         } else {
-            return "no_admin";//c
+            return "no_admin";
         }
     }
 }

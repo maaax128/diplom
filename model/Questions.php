@@ -20,7 +20,7 @@ class Questions
 		$results = $sth->fetchAll(PDO::FETCH_ASSOC);
 		return $results;
     }
-
+    //получение одного вопроса
     public function getOneQuestion($id) {
         $sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status, id as question_id FROM questions WHERE id=:id ');
         $sth->bindValue(':id', (int)$id, PDO::PARAM_INT);
@@ -28,7 +28,7 @@ class Questions
         $results = $sth->fetch(PDO::FETCH_ASSOC);
         return $results;
     }
-
+    //получения вопросов без ответов
     public function getNotAnsweredQuestions() {
         $sth = self::$connect->prepare('SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions 
                                           WHERE NOT(answered = 1)
@@ -38,8 +38,10 @@ class Questions
         return $results;
     }
 
+    //получение вопроса с ответом и категорией по id вопроса
     public function getQuestionById($id) {
-	    $sql = 'SELECT id, question, id_category, answered, userName, email, create_date, status, id, category, id, answer, id_category, id_questions, a.id AS answer_id, q.id AS question_id
+
+	    $sql = 'SELECT q.*,a.id AS answer_id, q.id AS question_id
                 FROM questions q
                   RIGHT JOIN category c ON c.id = q.id_category
                   RIGHT JOIN answer a ON a.id_questions = q.id
@@ -53,6 +55,7 @@ class Questions
         return $results;
     }
 
+    //получение всех вопросов категории
     public function getQuestionsByCategory($category) {
 
         $sql ="SELECT id, question, id_category, answered, userName, email, create_date, status FROM questions 
@@ -65,6 +68,7 @@ class Questions
         return $results;
     }
 
+    //добавление вопроса от пользователя
     public function addUserQuestion($params=[]) {
     	$sth = self::$connect->prepare("INSERT INTO questions (question, id_category, answered, userName, email, create_date, status) 
     		VALUES (:question,:group,:answered,:name,:email, NOW(), 0)");
@@ -79,7 +83,7 @@ class Questions
 		
 		return null;
     }
-
+//получение количества вопросов
     public function getCountQuestion($category, $answered) {
     	$sql ="SELECT COUNT(*) as count
     			FROM questions 
@@ -92,7 +96,7 @@ class Questions
 
 		return $results;
     }
-
+//добавление категории
     public function addCategory($name)
     {
         $duplicate = false;
@@ -112,7 +116,7 @@ class Questions
             $sth->execute();
         }
     }
-
+//удаление категории
     public function deleteCategory($id) {
         $sql = "DELETE FROM category WHERE id= :id; ";
         $sth = self::$connect->prepare($sql);
@@ -124,14 +128,14 @@ class Questions
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
     }
-
+//удаление вопроса
     public function deleteQuestion($id) {
         $sql = "DELETE FROM questions WHERE id= :id; ";
         $sth = self::$connect->prepare($sql);
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
     }
-
+//скрытие вопроса
     public function hideQuestion($id,$status) {
 	    if ($status == 1) {
 	        $status = 2;
@@ -144,7 +148,7 @@ class Questions
         $sth->bindValue(':status', $status, PDO::PARAM_INT);
         $sth->execute();
     }
-
+//редактирование вопроса
     public function editQuestion($arr) {
         $sql = "UPDATE questions 
                   SET question = :question,

@@ -5,6 +5,7 @@ $model = new questions();
 $model->newConnect();
 
 switch ($_GET['action']) {
+    //форма создания вопроса
     case 'questionUser':
         //получем категории
         $categoryes = $model->getCategoryes();
@@ -16,6 +17,7 @@ switch ($_GET['action']) {
         include "../templates/front/questionUser.php";
         break;
 
+    // добавление вопроса в базу
     case 'addQuestionUser':
         $params = array("question"=>$_GET['userQuest'],
             "group"=>$_GET['category'],

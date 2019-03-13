@@ -73,7 +73,9 @@
                                 </form>
                             <?php } ?>
 
-                            <form action="editquestion.php" method="get" style="display: inline-block">
+<!--                            <form action="editquestion.php" method="get" style="display: inline-block">-->
+                            <form action="../controller/questionController.php" method="get" style="display: inline-block">
+                                <input type="text" name="action" value="editquestion" hidden>
                                 <input type="text" name="id" value="<?=$v['id'];?>" hidden>
                                 <?php
                                 if($v['answered']!=1) { ?>
@@ -83,7 +85,6 @@
                             </form>
 
                             <?php if($v['status']==0) { ?>
-<!--                                <form action="addAnswer.php" method="post" style="display: inline-block">-->
                                 <form action="../controller/questionController.php" method="get" style="display: inline-block">
                                     <input type="text" name="action" value="addAnswer" hidden>
                                     <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
