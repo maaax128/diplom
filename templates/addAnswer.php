@@ -1,20 +1,10 @@
-<?php
-require('model/Connect.php');
-require('model/Questions.php');
-
-$model = new questions();
-$model->newConnect();
-$title= "Редактирование вопроса123";
-include "templates/head.php";
-?>
-
 <section class="cd-faq">
-    <form action="controller.php" method="post">
+    <form action="../controller.php" method="post">
         <div class="cd-faq-items" style="margin-top: 10px; display: table-row;">
 
             <input type="text" name="method" value="addAnswer" hidden>
-            <input type="text" name="question_id" value="<?=$_POST["questionId"];?>" hidden>
-            <input type="text" name="category_id" value="<?=$_POST["category_id"];?>" hidden>
+            <input type="text" name="question_id" value="<?=$_GET["questionId"];?>" hidden>
+            <input type="text" name="category_id" value="<?=$_GET["category_id"];?>" hidden>
 
             <div style="display: inline-block; float: left;">
                 <textarea name="answer" rows="4" cols="45" placeholder="Введите ответ"></textarea>
@@ -34,6 +24,3 @@ include "templates/head.php";
         </div>
     </form>
 </section>
-<?php
-include "templates/foot.php";
-?>

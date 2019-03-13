@@ -35,15 +35,15 @@ foreach ($resultAdmins as $key => $value) { ?>
         </td>
         <td>
             <form id="deleteAdmin" action="controller.php" method="post">
-            <input type = "text" name="adminId" value="<?=$value['id']; ?>" hidden>
-            <input type="text" name="method" hidden value="deleteAdmin">
-            <?php
-                if ($value['login'] === 'admin') {
-                    echo 'это Вы';
-                 }
-                 else {
-                     ?><input type="submit" value="удалить администратора">
-             <?php } ?>
+                <input type = "text" name="adminId" value="<?=$value['id']; ?>" hidden>
+                <input type="text" name="method" hidden value="deleteAdmin">
+                <?php
+                    if ($value['login'] === 'admin') {
+                        echo 'это Вы';
+                     }
+                     else {
+                         ?><input type="submit" value="удалить администратора">
+                 <?php } ?>
             </form>
         </td>
     </tr>

@@ -83,7 +83,9 @@
                             </form>
 
                             <?php if($v['status']==0) { ?>
-                                <form action="addAnswer.php" method="post" style="display: inline-block">
+<!--                                <form action="addAnswer.php" method="post" style="display: inline-block">-->
+                                <form action="../controller/questionController.php" method="get" style="display: inline-block">
+                                    <input type="text" name="action" value="addAnswer" hidden>
                                     <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
                                     <input type="text" name="category_id" value="<?=$id_category;?>" hidden>
                                     <input type="submit" value="Ответить">
