@@ -36,7 +36,8 @@ include "templates/head.php";
             <input class="submit" type="submit" name="checkIn" value="Авторизация">
         </form>
 
-        <form action="questoinUser.php" method="post" enctype="multipart/form-data">
+        <form action="controller/frontController.php" method="get" enctype="multipart/form-data">
+            <input type="text" name="action" value="questionUser" hidden>
             <input class="submit" type="submit" name="questoinUser" value="Задать вопрос">
         </form>
     </ul>

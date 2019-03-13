@@ -8,7 +8,6 @@ $title= "Редактирование вопроса";
 include "templates/head.php";
 ?>
 
-
 <section class="cd-faq">
     <form action="controller.php" method="post">
         <div class="cd-faq-items" style="margin-top: 10px; display: table-row;">

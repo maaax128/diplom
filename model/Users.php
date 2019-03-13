@@ -54,4 +54,23 @@ class Users
         $sth->bindValue(':password', $arr['password'], PDO::PARAM_STR);
         $sth->execute();
     }
+
+    public function autorization($arr){
+        $sth = self::$connect->prepare("SELECT login from admins WHERE login=:login AND password = :password");
+        $sth->bindValue(':login', $arr['login'], PDO::PARAM_STR);
+        $sth->bindValue(':password', $arr['password'], PDO::PARAM_STR);
+        $sth->execute();
+        $sth = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($sth)) {
+//            foreach ($sth as $value) {
+//                $_SESSION['user_id']=$value['id'];
+//                $_SESSION['login']=$value['login'];
+//                $_SESSION['password']=$value['password'];
+//
+//            }
+            header("Location:../controlPanel.php");
+        } else {
+            return "no_admin";//c
+        }
+    }
 }
