@@ -22,7 +22,7 @@ class Connect
     }
     public function config()
     {
-        $settings = require 'settings.php';
+        $settings = require '/../config/settings.php';
         $db = $settings['local_db'];
         return $db;
     }

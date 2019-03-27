@@ -34,7 +34,7 @@ foreach ($resultAdmins as $key => $value) { ?>
 
         </td>
         <td>
-            <form id="deleteAdmin" action="controller.php" method="post">
+            <form id="deleteAdmin" action="controller/innerController.php" method="post">
                 <input type = "text" name="adminId" value="<?=$value['id']; ?>" hidden>
                 <input type="text" name="method" hidden value="deleteAdmin">
                 <?php

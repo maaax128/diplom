@@ -13,14 +13,15 @@ foreach ($allQuestions as $k=>$v) {
                        Дата: <?=$v['create_date'];?>
                 </span>
         <div>
-            <form id="deleteQuestion" action="controller.php" method="post" style="display: inline-block">
+            <form id="deleteQuestion" action="controller/innerController.php" method="post" style="display: inline-block">
                 <input type="text" name="questionId" value="<?=$v['id']?>" hidden>
                 <input type="text" name="method" hidden value="deleteQuestion">
                 <input type="submit" value="Удалить">
                 </span>
             </form>
 
-            <form action="editquestion.php" method="get" style="display: inline-block">
+            <form action="controller/questionController.php" method="get" style="display: inline-block">
+                <input type="text" name="action" value="editquestion" hidden>
                 <input type="text" name="id" value="<?=$v['id']?>" hidden>
                 <input type="text" name="type" value="notanswered" hidden>
                 <input type="submit" value="Редактировать">

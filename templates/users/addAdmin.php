@@ -1,5 +1,5 @@
 <!--<form action="../addNewADmins.php" method="post" enctype="multipart/form-data">-->
-<form action="../controller.php" method="post" enctype="multipart/form-data">
+<form action="../../controller/innerController.php" method="post" enctype="multipart/form-data">
     <fieldset>
          <legend>Введите данные</legend>
          <input type="text" name="name" placeholder="Введите имя" required>
@@ -8,4 +8,4 @@
          <input type="submit" name="" value="Отправить">
     </fieldset>
 </form>
-<p><a href="../../controlPanel.php">Вернуться в панель администратора</a></p>
+<p><a href="../controlPanel.php">Вернуться в панель администратора</a></p>

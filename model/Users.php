@@ -63,6 +63,8 @@ class Users
         $sth = $sth->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($sth)) {
             header("Location:../controlPanel.php");
+            session_start();
+            $_SESSION['user'] =  $arr['login'];
         } else {
             return "no_admin";
         }

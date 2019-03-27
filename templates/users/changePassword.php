@@ -1,4 +1,4 @@
-<form action="../../controller.php" method="post" enctype="multipart/form-data">
+<form action="../../controller/innerController.php" method="post" enctype="multipart/form-data">
     <fieldset>
         <legend>Введите новый пароль</legend>
         <input type="text" name="method" value="changePassword" hidden>
@@ -7,4 +7,4 @@
         <input type="submit" value="Отправить">
     </fieldset>
 </form>
-<p><a href="../../controlPanel.php">Вернуться в панель администратора</a></p>
+<p><a href="../controlPanel.php">Вернуться в панель администратора</a></p>

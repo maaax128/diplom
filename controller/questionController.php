@@ -22,7 +22,7 @@ switch ($_GET['action']) {
           $question = $model->getQuestionById((int)$_GET['id']);
       }
 
-      var_dump($question);
+     // var_dump($question);
 
       $categoryes = $model->getCategoryes();
 

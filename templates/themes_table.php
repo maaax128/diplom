@@ -11,7 +11,7 @@
         $countNotAnswered = $countAll - $countAnswered;
         ?>
         <div style="margin-left: 10px;">
-            <form id="deleteCategory" action="controller.php" method="post">
+            <form id="deleteCategory" action="controller/innerController.php" method="post">
                 <li class="cd-faq-title"><?php echo "<h2>$group</h2>"; ?></li>
                 <div style="margin-bottom: 5px;">
                     Всего вопросов: <?=$countAll;?>
@@ -51,21 +51,21 @@
                         </span>
 
                         <div>
-                            <form id="deleteQuestion" action="controller.php" method="post" style="display: inline-block">
+                            <form id="deleteQuestion" action="controller/innerController.php" method="post" style="display: inline-block">
                                 <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
                                 <input type="text" name="method" hidden value="deleteQuestion">
                                 <input type="submit" value="Удалить">
                             </form>
 
                             <?php if($v['status']==1) {?>
-                                <form action="controller.php" method="post" style="display: inline-block">
+                                <form action="controller/innerController.php" method="post" style="display: inline-block">
                                     <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
                                     <input type="text" name="status" value="<?=$v['status'];?>" hidden>
                                     <input type="text" name="method" hidden value="hideQuestion">
                                     <input type="submit" value="Скрыть">
                                 </form>
                             <?php }else if($v['status']==2){ ?>
-                                <form action="controller.php" method="post" style="display: inline-block">
+                                <form action="controller/innerController.php" method="post" style="display: inline-block">
                                     <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
                                     <input type="text" name="status" value="<?=$v['status'];?>" hidden>
                                     <input type="text" name="method" hidden value="hideQuestion">
@@ -74,7 +74,7 @@
                             <?php } ?>
 
 <!--                            <form action="editquestion.php" method="get" style="display: inline-block">-->
-                            <form action="../controller/questionController.php" method="get" style="display: inline-block">
+                            <form action="controller/questionController.php" method="get" style="display: inline-block">
                                 <input type="text" name="action" value="editquestion" hidden>
                                 <input type="text" name="id" value="<?=$v['id'];?>" hidden>
                                 <?php
@@ -85,7 +85,7 @@
                             </form>
 
                             <?php if($v['status']==0) { ?>
-                                <form action="../controller/questionController.php" method="get" style="display: inline-block">
+                                <form action="controller/questionController.php" method="get" style="display: inline-block">
                                     <input type="text" name="action" value="addAnswer" hidden>
                                     <input type="text" name="questionId" value="<?=$v['id'];?>" hidden>
                                     <input type="text" name="category_id" value="<?=$id_category;?>" hidden>
@@ -106,7 +106,7 @@
     <h2>Добавление новой темы</h2>
 </div>
 <div style="margin-top: 10px">
-    <form id="categoryName" action="controller.php" method="POST" enctype="">
+    <form id="categoryName" action="controller/innerController.php" method="POST" enctype="">
         <input type="text" name="categoryName" placeholder="Название темы" required>
         <input type="text" name="method" hidden value="addCategory">
         <input type="submit" value="Добавить тему">

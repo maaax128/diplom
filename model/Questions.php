@@ -41,7 +41,7 @@ class Questions
     //получение вопроса с ответом и категорией по id вопроса
     public function getQuestionById($id) {
 
-	    $sql = 'SELECT q.*,a.id AS answer_id, q.id AS question_id
+	    $sql = 'SELECT q.*,a.id AS answer_id, a.answer, q.id AS question_id
                 FROM questions q
                   RIGHT JOIN category c ON c.id = q.id_category
                   RIGHT JOIN answer a ON a.id_questions = q.id

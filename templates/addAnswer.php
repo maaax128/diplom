@@ -1,5 +1,5 @@
 <section class="cd-faq">
-    <form action="../controller.php" method="post">
+    <form action="../controller/innerController.php" method="post">
         <div class="cd-faq-items" style="margin-top: 10px; display: table-row;">
 
             <input type="text" name="method" value="addAnswer" hidden>

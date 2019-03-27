@@ -1,6 +1,5 @@
 <div class="cd-faq-items">
-<!--    <form action="../../actionAuthorization.php" method="post" enctype="multipart/form-data">-->
-    <form action="../../controller/usersController.php" method="get" enctype="multipart/form-data">
+    <form action="../controller/usersController.php" method="post" enctype="multipart/form-data">
         <h2>Авторизация</h2>
         <input name="action" value="actionAuthorization" hidden>
         <p><input class="input" type="text" name="login" placeholder="login"></p>

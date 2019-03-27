@@ -3,7 +3,7 @@
 ?>
 
 <!--<form action="addQuestionUser.php" method="post" enctype="multipart/form-data">-->
-<form action="../../controller/frontController.php" method="get" enctype="multipart/form-data">
+<form action="../controller/frontController.php" method="POST" enctype="multipart/form-data">
     <fieldset>
          <legend>Контактная информация</legend>
         <input type="text" name="action" value="addQuestionUser" hidden>

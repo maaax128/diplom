@@ -5,24 +5,25 @@ require('../model/Users.php');
 $model = new Users();
 $model->newConnect();
 
-switch ($_GET['action']) {
-    case 'actionAuthorization':
-        if (empty($_GET['login']) || empty($_GET['password'])) {
+if( $_POST['action'] == 'actionAuthorization') {
+        if (empty($_POST['login']) || empty($_POST['password'])) {
             header("Location:../../index.php");
             exit;
         } else {
             $arr = [
-                "login"=>$_GET['login'],
-                "password"=>$_GET['password']
+                "login" => $_POST['login'],
+                "password" => $_POST['password']
             ];
             //если не найден админ с таким логином и паролем
-            if($model->autorization($arr) == "no_admin") {
+            if ($model->autorization($arr) == "no_admin") {
                 include "../templates/head.php";
                 echo "Нет пользователя с такими параметрами<br>";
                 echo "<a href='../index.php'>На главную </a>";
             }
         }
-        break;
+}
+
+switch ($_GET['action']) {
 
     case 'changePassword':
         $id=(int)$_GET['id'];
@@ -56,8 +57,6 @@ switch ($_GET['action']) {
         // подключаем шаблон
         include "../templates/users/formAuthorization.php";
         break;
-
-
 }
 
 // подключение футера
