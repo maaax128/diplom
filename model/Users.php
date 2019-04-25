@@ -5,7 +5,7 @@ class Users
 
     public function newConnect()
     {
-        self::$connect = connect::get();
+        if(self::$connect==null) self::$connect = connect::get();
     }
     //добавление нового администратора
     public function addNewAdmin($var = [])

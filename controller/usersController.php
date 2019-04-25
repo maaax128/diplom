@@ -5,7 +5,7 @@ require('../model/Users.php');
 $model = new Users();
 $model->newConnect();
 
-if( $_POST['action'] == 'actionAuthorization') {
+if(isset($_POST['action']) && $_POST['action'] == 'actionAuthorization') {
         if (empty($_POST['login']) || empty($_POST['password'])) {
             header("Location:../../index.php");
             exit;
@@ -22,41 +22,66 @@ if( $_POST['action'] == 'actionAuthorization') {
             }
         }
 }
+if (isset($_GET['action'])) {
+    switch ($_GET['action']) {
 
-switch ($_GET['action']) {
+        case 'changePassword':
+            changePassword();
+            break;
 
-    case 'changePassword':
-        $id=(int)$_GET['id'];
-        $title= "Смена пароля";
+        case 'addAdmin':
+            addAdmin();
+            break;
+
+        case 'deleteAdmin':
+            deleteAdmin();
+            break;
+
+        case 'formAuthorization':
+            formAuthorization();
+            break;
+    }
+}
+
+function changePassword() {
+        $model = new Users();
+        $model->newConnect();
+        $id = (int)$_GET['id'];
+        $title = "Смена пароля";
         //подключаем хедер
         include "../templates/head.php";
         // подключаем шаблон
         include "../templates/users/changePassword.php";
-        break;
+}
 
-    case 'addAdmin':
-        $title= "Регистрация нового администратора";
+function addAdmin() {
+        $model = new Users();
+        $model->newConnect();
+        $title = "Регистрация нового администратора";
         //подключаем хедер
         include "../templates/head.php";
         // подключаем шаблон
         include "../templates/users/addAdmin.php";
-        break;
+}
 
-    case 'deleteAdmin':
-        $title= "Регистрация нового администратора";
+function deleteAdmin() {
+        $model = new Users();
+        $model->newConnect();
+        $title = "Регистрация нового администратора";
         //подключаем хедер
         include "../templates/head.php";
         // подключаем шаблон
         include "../templates/users/addAdmin.php";
-        break;
+}
 
-    case 'formAuthorization':
-        $title= "Форма авторизации";
+function formAuthorization() {
+        $model = new Users();
+        $model->newConnect();
+        $title = "Форма авторизации";
         //подключаем хедер
         include "../templates/head.php";
         // подключаем шаблон
         include "../templates/users/formAuthorization.php";
-        break;
 }
 
 // подключение футера
